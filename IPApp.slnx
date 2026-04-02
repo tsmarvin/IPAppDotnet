@@ -1,0 +1,7 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="Directory.Packages.props" />
+  </Folder>
+  <Project Path="IPApp.Browser/IPApp.Browser.csproj" />
+  <Project Path="IPApp/IPApp.csproj" />
+</Solution>
