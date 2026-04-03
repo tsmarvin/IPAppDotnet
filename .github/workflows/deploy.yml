@@ -27,6 +27,9 @@ jobs:
       - name: Publish WASM app
         run: dotnet publish IPApp.Browser/IPApp.Browser.csproj -c Release -o ./publish
 
+      - name: Copy Cloudflare Pages Functions
+        run: cp -r functions ./publish/wwwroot/functions
+
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
         with:

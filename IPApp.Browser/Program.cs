@@ -1,17 +1,23 @@
-﻿using System.Runtime.Versioning;
+using System;
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Browser;
-using ReactiveUI.Avalonia;
 using IPApp;
+using ReactiveUI.Avalonia;
 
-internal sealed partial class Program
-{
-    private static Task Main(string[] args) => BuildAvaloniaApp()
-            .WithInterFont()
-            .UseReactiveUI(_ => { })
-            .StartBrowserAppAsync("out");
+internal sealed partial class Program {
+    private static async Task Main( string[] args ) {
+        if (args.Length > 0 && Uri.TryCreate( args[0], UriKind.Absolute, out Uri? uri )) {
+            App.BaseUrl = uri.GetLeftPart( UriPartial.Authority );
+        }
 
-    public static AppBuilder BuildAvaloniaApp()
-        => AppBuilder.Configure<App>();
+        await BuildAvaloniaApp( )
+            .WithInterFont( )
+            .UseReactiveUI( _ => { } )
+            .StartBrowserAppAsync( "out" );
+    }
+
+    public static AppBuilder BuildAvaloniaApp( ) {
+        return AppBuilder.Configure<App>( );
+    }
 }

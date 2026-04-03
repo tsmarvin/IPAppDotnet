@@ -1,7 +1,6 @@
-﻿using ReactiveUI;
+using ReactiveUI;
 
 namespace IPApp.ViewModels;
 
-public abstract class ViewModelBase : ReactiveObject
-{
+public abstract class ViewModelBase : ReactiveObject {
 }
