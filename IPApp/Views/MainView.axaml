@@ -1,0 +1,100 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:IPApp.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="IPApp.Views.MainView"
+             x:DataType="vm:MainViewModel">
+  <Design.DataContext>
+    <vm:MainViewModel />
+  </Design.DataContext>
+
+  <UserControl.Styles>
+    <Style Selector="Button.link">
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="BorderThickness" Value="0" />
+      <Setter Property="Padding" Value="8,4" />
+      <Setter Property="Cursor" Value="Hand" />
+      <Setter Property="FontSize" Value="14" />
+    </Style>
+    <Style Selector="Button.link /template/ ContentPresenter#PART_ContentPresenter">
+      <Setter Property="TextBlock.TextDecorations" Value="Underline" />
+    </Style>
+    <Style Selector="Button.link:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+      <Setter Property="Foreground" Value="{DynamicResource SystemControlHighlightAccentBrush}" />
+    </Style>
+  </UserControl.Styles>
+
+  <Grid RowDefinitions="Auto,*">
+    <!-- Header -->
+    <Border Grid.Row="0"
+            BorderBrush="{DynamicResource SystemControlForegroundBaseLowBrush}"
+            BorderThickness="0,0,0,1"
+            Padding="12,6">
+      <StackPanel Orientation="Horizontal" Spacing="4">
+        <Button Content="GitHub"
+                Command="{Binding OpenUrlCommand}"
+                CommandParameter="https://github.com/tsmarvin/IPAppDotnet"
+                Classes="link" />
+        <Button Content="Docs"
+                Command="{Binding OpenUrlCommand}"
+                CommandParameter="https://docs.ipapp.net"
+                Classes="link" />
+      </StackPanel>
+    </Border>
+
+    <!-- Content -->
+    <Border Grid.Row="1"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Center"
+            Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
+            BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
+            BorderThickness="1"
+            CornerRadius="8"
+            Padding="48,32"
+            BoxShadow="0 2 8 0 #20000000">
+      <StackPanel Spacing="16" HorizontalAlignment="Center">
+        <!-- Title -->
+        <TextBlock Text="Your IP Address"
+                   FontSize="14"
+                   Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                   HorizontalAlignment="Center" />
+
+        <!-- Loading -->
+        <ProgressBar IsIndeterminate="True"
+                     IsVisible="{Binding IsLoading}"
+                     Width="200"
+                     HorizontalAlignment="Center" />
+
+        <!-- IP Address -->
+        <SelectableTextBlock Text="{Binding IpAddress}"
+                             FontSize="28"
+                             FontWeight="SemiBold"
+                             FontFamily="Cascadia Code, Consolas, Courier New, monospace"
+                             HorizontalAlignment="Center"
+                             IsVisible="{Binding !IsLoading}" />
+
+        <!-- Protocol Badge -->
+        <Border CornerRadius="4"
+                Padding="12,4"
+                HorizontalAlignment="Center"
+                IsVisible="{Binding !HasError}"
+                Background="{DynamicResource SystemControlHighlightAccentBrush}">
+          <TextBlock Text="{Binding IpProtocol}"
+                     FontSize="12"
+                     Foreground="White"
+                     FontWeight="SemiBold" />
+        </Border>
+
+        <!-- Copy Button -->
+        <Button Command="{Binding CopyCommand}"
+                Content="{Binding CopyButtonText}"
+                HorizontalAlignment="Center"
+                HorizontalContentAlignment="Center"
+                MinWidth="160"
+                IsVisible="{Binding !HasError}" />
+      </StackPanel>
+    </Border>
+  </Grid>
+</UserControl>
