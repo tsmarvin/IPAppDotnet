@@ -13,7 +13,7 @@ export async function onRequest(context) {
 
     if (format === 'json') {
         return new Response(
-            JSON.stringify({ ip: ip, Protocol: protocol }),
+            JSON.stringify({ ip: ip, protocol: protocol }),
             { headers: { ...headers, 'Content-Type': 'application/json' } }
         );
     }

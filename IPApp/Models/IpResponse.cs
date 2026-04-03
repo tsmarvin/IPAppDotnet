@@ -6,6 +6,6 @@ public sealed class IpResponse {
     [JsonPropertyName( "ip" )]
     public string Ip { get; set; } = string.Empty;
 
-    [JsonPropertyName( "Protocol" )]
+    [JsonPropertyName("protocol")]
     public string Protocol { get; set; } = string.Empty;
 }

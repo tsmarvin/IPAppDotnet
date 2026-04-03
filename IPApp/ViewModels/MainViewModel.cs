@@ -64,11 +64,16 @@ public class MainViewModel : ViewModelBase {
         try {
             using HttpClient client = new();
             string baseUrl = App.BaseUrl;
-            if (!string.IsNullOrEmpty( baseUrl )) {
-                client.BaseAddress = new Uri( baseUrl );
+
+            if (!Uri.TryCreate(baseUrl, UriKind.Absolute, out Uri? baseUri) ||
+                !Uri.TryCreate(baseUri, "/api?format=json", out Uri? requestUri))
+            {
+                IpAddress = "Unable to detect IP";
+                HasError = true;
+                return;
             }
 
-            string response = await client.GetStringAsync("/api?format=json");
+            string response = await client.GetStringAsync(requestUri);
             IpResponse? result = JsonSerializer.Deserialize<IpResponse>(response);
             if (result is not null && !string.IsNullOrEmpty( result.Ip )) {
                 IpAddress = result.Ip;
