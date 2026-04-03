@@ -74,7 +74,7 @@ public class MainViewModel : ViewModelBase {
             }
 
             string response = await client.GetStringAsync(requestUri);
-            IpResponse? result = JsonSerializer.Deserialize<IpResponse>(response);
+            IpResponse? result = JsonSerializer.Deserialize(response, AppJsonContext.Default.IpResponse);
             if (result is not null && !string.IsNullOrEmpty( result.Ip )) {
                 IpAddress = result.Ip;
                 IpProtocol = result.Protocol;
